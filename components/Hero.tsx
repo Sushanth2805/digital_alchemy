@@ -1,134 +1,200 @@
 import React, { useEffect, useState } from 'react';
-import { ArrowRight, Play, ChevronDown } from 'lucide-react';
-import { StatCard } from './ui/StatCard';
+import { ArrowRight, ChevronDown, Sparkles } from 'lucide-react';
 import { ActionButton } from './ui/ActionButton';
 
 export const Hero: React.FC = () => {
   const [loaded, setLoaded] = useState(false);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
     setLoaded(true);
+    
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePosition({
+        x: (e.clientX / window.innerWidth) * 20,
+        y: (e.clientY / window.innerHeight) * 20
+      });
+    };
+    
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
   return (
-    <section className="relative min-h-screen w-full flex flex-col justify-center overflow-hidden bg-brand-dark text-white">
+    <section className="relative min-h-screen w-full flex flex-col justify-center overflow-hidden bg-neutral-950 text-white pt-20">
       
-      {/* 1. DYNAMIC BACKGROUND LAYERS */}
-      
-      {/* Base Gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-neutral-900 via-neutral-950 to-black z-0"></div>
-      
-      {/* Hero Image/3D Abstract */}
-      <div className={`absolute inset-0 z-0 transition-opacity duration-[2000ms] ease-out ${loaded ? 'opacity-100' : 'opacity-0'}`}>
-        <img 
-            src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop" 
-            className="w-full h-full object-cover mix-blend-lighten opacity-60 animate-subtle-zoom origin-center saturate-0 contrast-125"
-            alt="Abstract 3D Form"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-brand-dark via-brand-dark/50 to-transparent"></div>
-        <div className="absolute inset-0 bg-gradient-to-r from-brand-dark via-brand-dark/80 to-transparent"></div>
-      </div>
-
-      {/* Glowing Ambient Orbs */}
-      <div className="absolute top-[20%] right-[10%] w-[500px] h-[500px] bg-brand-orange/20 rounded-full blur-[128px] animate-float mix-blend-screen z-0 pointer-events-none"></div>
-      <div className="absolute bottom-[-10%] left-[-10%] w-[600px] h-[600px] bg-purple-900/20 rounded-full blur-[128px] animate-pulse mix-blend-screen z-0 pointer-events-none"></div>
-
-      {/* Grid Overlay */}
-      <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_60%_at_50%_50%,#000_70%,transparent_100%)] z-0 pointer-events-none"></div>
-
-      {/* 2. CONTENT STRUCTURE */}
-      <div className="relative z-10 w-full max-w-[1800px] mx-auto px-6 md:px-12 min-h-screen flex flex-col justify-center py-24 md:py-0">
+      {/* Premium Background Effects */}
+      <div className="absolute inset-0 z-0">
+        {/* Base */}
+        <div className="absolute inset-0 bg-neutral-950"></div>
         
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 h-full lg:max-h-[800px] items-center">
-            
-            {/* LEFT COLUMN: Typography */}
-            <div className="lg:col-span-7 flex flex-col justify-center space-y-6 md:space-y-8">
+        {/* Animated Gradient Orbs */}
+        <div className="absolute top-[-10%] right-[-5%] w-[600px] h-[600px] bg-brand-orange/10 rounded-full blur-[120px] animate-pulse mix-blend-screen"></div>
+        <div className="absolute bottom-[-10%] left-[-10%] w-[500px] h-[500px] bg-purple-900/10 rounded-full blur-[100px] animate-pulse mix-blend-screen" style={{ animationDelay: '2s' }}></div>
+        
+        {/* Modern Grid */}
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:60px_60px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%,transparent_100%)]"></div>
+      </div>
+      
+      {/* Content */}
+      <div className="relative z-10 w-full max-w-[1400px] mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+        
+        {/* Left: Typography & content */}
+        <div className="max-w-3xl pt-10 lg:pt-0">
+            {/* Premium Badge */}
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-brand-orange/20 bg-brand-orange/5 backdrop-blur-md mb-8 animate-fade-in-up shadow-[0_0_15px_rgba(255,59,0,0.1)]">
+                <Sparkles className="w-3 h-3 text-brand-orange" />
+                <span className="text-xs font-bold uppercase tracking-widest text-brand-orange">Creative Technology Studio</span>
+            </div>
+
+            {/* Main Headline with Gradient */}
+            <h1 className="text-5xl md:text-7xl lg:text-[5.5rem] font-bold tracking-tight text-white mb-8 leading-[1.1] animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
+                We Build <br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-gray-200 to-gray-500">Digital Experiences</span> <br />
+                That <span className="text-brand-orange underline decoration-brand-orange/30 decoration-4 underline-offset-8">Matter</span>.
+            </h1>
+
+            {/* Clear Description */}
+            <p className="text-lg md:text-xl text-gray-400 font-light max-w-xl mb-10 leading-relaxed animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+                From interactive websites to immersive web applications, we transform your ideas into engaging digital products that users love.
+            </p>
+
+            {/* Stats Row */}
+            <div className="flex flex-wrap gap-12 mb-12 border-y border-white/5 py-6 animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
+                <div>
+                    <div className="text-3xl font-bold text-white mb-1">50+</div>
+                    <div className="text-xs font-mono text-gray-500 uppercase tracking-wider">Projects</div>
+                </div>
+                <div>
+                    <div className="text-3xl font-bold text-white mb-1">98%</div>
+                    <div className="text-xs font-mono text-gray-500 uppercase tracking-wider">Satisfaction</div>
+                </div>
+                <div>
+                    <div className="text-3xl font-bold text-white mb-1">5Y+</div>
+                    <div className="text-xs font-mono text-gray-500 uppercase tracking-wider">Experience</div>
+                </div>
+            </div>
+
+            {/* CTA Buttons */}
+            <div className="flex flex-wrap gap-4 animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
+                <ActionButton variant="primary">
+                    View Our Work <ArrowRight className="w-4 h-4 ml-2" />
+                </ActionButton>
+                <ActionButton variant="glass">
+                    Get In Touch
+                </ActionButton>
+            </div>
+        </div>
+
+        {/* Right: Abstract Visual Composition */}
+        <div className="hidden lg:block relative h-[600px] w-full animate-fade-in-up" style={{ animationDelay: '0.5s' }}>
+            <div className="relative w-full h-full perspective-1000">
                 
-                {/* Status Indicator */}
-                <div className="flex items-center gap-3 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
-                    <div className="px-3 py-1 rounded-full border border-white/10 bg-white/5 backdrop-blur-md flex items-center gap-2">
-                        <span className="relative flex h-2 w-2">
-                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                            <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
-                        </span>
-                        <span className="text-[10px] font-mono uppercase tracking-widest text-gray-300">System Online v2.4</span>
+                {/* Code Editor Glass Card */}
+                <div 
+                    className="absolute top-[5%] right-[5%] w-[90%] h-[80%] bg-[#0a0a0a]/90 border border-white/10 rounded-xl backdrop-blur-xl shadow-2xl transition-transform duration-200 ease-out overflow-hidden group"
+                    style={{ transform: `translate(${mousePosition.x * -0.5}px, ${mousePosition.y * -0.5}px) rotateY(-2deg)` }}
+                >
+                    {/* Editor Header */}
+                    <div className="w-full h-10 bg-white/5 border-b border-white/5 flex items-center px-4 justify-between">
+                        <div className="flex items-center gap-2">
+                            <div className="w-3 h-3 rounded-full bg-red-500/50"></div>
+                            <div className="w-3 h-3 rounded-full bg-yellow-500/50"></div>
+                            <div className="w-3 h-3 rounded-full bg-green-500/50"></div>
+                        </div>
+                        <div className="text-[10px] font-mono text-gray-500">alchemy.config.ts</div>
                     </div>
+
+                    {/* Editor Content */}
+                    <div className="p-6 font-mono text-sm space-y-2 text-gray-400">
+                        <div className="flex">
+                            <span className="text-purple-400 mr-2">const</span>
+                            <span className="text-yellow-200">DigitalAlchemy</span>
+                            <span className="text-white mr-2"> = </span>
+                            <span className="text-white">{'{'}</span>
+                        </div>
+                        <div className="pl-4">
+                            <span className="text-blue-300">innovation:</span> <span className="text-brand-orange">true</span>,
+                        </div>
+                        <div className="pl-4">
+                            <span className="text-blue-300">creativity:</span> <span className="text-green-300">"unbounded"</span>,
+                        </div>
+                         <div className="pl-4">
+                            <span className="text-blue-300">experience:</span> <span className="text-white">['Web', 'Mobile', 'XR']</span>,
+                        </div>
+                        <div className="pl-4">
+                             <span className="text-blue-300">stack:</span> <span className="text-white">{'{'}</span>
+                        </div>
+                        <div className="pl-8">
+                             <span className="text-gray-500">// Modern tech stack</span>
+                        </div>
+                        <div className="pl-8">
+                             <span className="text-purple-400">framework:</span> <span className="text-green-300">"Next.js"</span>,
+                        </div>
+                        <div className="pl-8">
+                             <span className="text-purple-400">styling:</span> <span className="text-green-300">"Tailwind"</span>
+                        </div>
+                        <div className="pl-4">
+                             <span className="text-white">{'}'}</span>
+                        </div>
+                        <div>
+                            <span className="text-white">{'}'}</span>;
+                        </div>
+                        
+                         <div className="pt-4 flex items-center gap-2">
+                            <span className="text-purple-400">export default</span>
+                            <span className="text-yellow-200">DigitalAlchemy</span>;
+                            <span className="animate-pulse text-brand-orange">|</span>
+                        </div>
+                    </div>
+                    
+                    {/* Glow Effect */}
+                    <div className="absolute top-0 right-0 w-1/2 h-full bg-brand-orange/5 blur-3xl pointer-events-none"></div>
                 </div>
 
-                {/* Main Headline - Staggered Reveal with Responsive Viewport Units */}
-                <div className="space-y-[-5px] md:space-y-[-20px] relative">
-                    <div className="overflow-hidden">
-                        <h1 className="text-[13vw] md:text-8xl lg:text-[9rem] font-black tracking-tighter text-white animate-slide-reveal block leading-none" style={{ animationDelay: '0.2s' }}>
-                            DIGITAL
-                        </h1>
-                    </div>
-                    <div className="overflow-hidden">
-                        <h1 className="text-[13vw] md:text-8xl lg:text-[9rem] font-black tracking-tighter text-transparent text-stroke-1 animate-slide-reveal block leading-none opacity-80" style={{ animationDelay: '0.3s' }}>
-                            ALCHEMY
-                        </h1>
-                    </div>
-                    <div className="overflow-hidden pt-4">
-                        <p className="text-sm md:text-xl text-gray-400 font-light max-w-xl animate-slide-reveal border-l-2 border-brand-orange pl-4 md:pl-6 ml-1 md:ml-2" style={{ animationDelay: '0.5s' }}>
-                            Transforming raw data into immersive digital experiences. Brutalist architecture meets neural aesthetics.
-                        </p>
-                    </div>
+                {/* Floating Elements */}
+                <div 
+                    className="absolute top-[20%] left-[-10%] w-[180px] p-4 bg-neutral-900/90 border border-white/10 rounded-lg backdrop-blur-md shadow-xl z-20"
+                    style={{ transform: `translate(${mousePosition.x * 1.2}px, ${mousePosition.y * 1.2}px)` }}
+                >
+                     <div className="flex items-center gap-3 mb-2">
+                        <div className="w-8 h-8 rounded bg-brand-orange/20 flex items-center justify-center text-brand-orange">
+                            <Sparkles size={14} />
+                        </div>
+                        <div>
+                            <div className="text-xs font-bold text-white">AI-Powered</div>
+                            <div className="text-[10px] text-gray-500">Optimization</div>
+                        </div>
+                     </div>
+                     <div className="w-full bg-white/10 rounded-full h-1.5 overflow-hidden">
+                         <div className="bg-brand-orange h-full w-[85%] animate-pulse"></div>
+                     </div>
+                </div>
+                
+                <div 
+                    className="absolute bottom-[15%] right-[-5%] w-[220px] p-4 bg-neutral-900/90 border border-white/10 rounded-lg backdrop-blur-md shadow-xl z-20"
+                    style={{ transform: `translate(${mousePosition.x * 0.8}px, ${mousePosition.y * 0.8}px)` }}
+                >
+                     <div className="flex justify-between items-center mb-3">
+                         <span className="text-xs font-bold text-white">Performance</span>
+                         <span className="text-xs text-green-400 font-mono">99.8%</span>
+                     </div>
+                     <div className="flex items-end gap-1 h-10">
+                         {[40, 65, 45, 80, 55, 90, 75].map((h, i) => (
+                             <div key={i} className="flex-1 bg-white/10 rounded-sm hover:bg-brand-orange/80 transition-colors" style={{ height: `${h}%` }}></div>
+                         ))}
+                     </div>
                 </div>
 
-                {/* Action Area */}
-                <div className="flex flex-wrap gap-4 pt-4 md:pt-8 animate-fade-in-up opacity-0" style={{ animationDelay: '0.8s', animationFillMode: 'forwards' }}>
-                    <ActionButton variant="primary">
-                        Start Initiative <ArrowRight className="w-4 h-4 ml-2" />
-                    </ActionButton>
-                    <ActionButton variant="glass">
-                        <Play className="w-4 h-4 mr-2 fill-current" /> Watch Reel
-                    </ActionButton>
-                </div>
-            </div>
-
-            {/* RIGHT COLUMN: Stats & Visuals */}
-            <div className="lg:col-span-5 hidden lg:flex flex-col justify-end h-full pb-20 relative">
-                {/* Decorative vertical line */}
-                <div className="absolute top-0 left-[-40px] w-px h-full bg-gradient-to-b from-transparent via-white/10 to-transparent"></div>
-
-                <div className="grid gap-4 relative">
-                    {/* Floating 'Glass' Cards with specific delays */}
-                    <div className="animate-fade-in-up opacity-0" style={{ animationDelay: '1s', animationFillMode: 'forwards' }}>
-                        <StatCard 
-                            value="204M+"
-                            label="Neural Connections"
-                            trend="System load: 42%"
-                            variant="dark"
-                        />
-                    </div>
-                    <div className="animate-fade-in-up opacity-0 ml-12" style={{ animationDelay: '1.2s', animationFillMode: 'forwards' }}>
-                        <StatCard 
-                            value="0.04s"
-                            label="Interaction Latency"
-                            trend="Optimized for Edge"
-                            variant="light"
-                        />
-                    </div>
-                </div>
             </div>
         </div>
+
       </div>
 
-      {/* Footer / Scroll Indicator */}
-      <div className="absolute bottom-0 left-0 w-full p-6 md:p-12 flex justify-between items-end z-20 pointer-events-none">
-        <div className="hidden md:block font-mono text-xs text-gray-500">
-            / EST. 2025<br/>
-            / SAN FRANCISCO
-        </div>
-        
-        <div className="flex flex-col items-center gap-2 animate-bounce opacity-50 mx-auto md:mx-0">
-            <span className="text-[10px] uppercase tracking-widest text-gray-500">Scroll</span>
-            <ChevronDown className="text-white w-4 h-4" />
-        </div>
-
-        <div className="hidden md:block font-mono text-xs text-gray-500 text-right">
-            <span className="text-brand-orange">●</span> LIVE FEED<br/>
-            ENCRYPTED
-        </div>
+      {/* Scroll Indicator */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-bounce opacity-50 z-20">
+        <span className="text-[10px] font-mono uppercase tracking-widest text-gray-500">Scroll to explore</span>
+        <ChevronDown className="text-gray-500 w-4 h-4" />
       </div>
     </section>
   );
